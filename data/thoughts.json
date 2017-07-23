@@ -1,0 +1,12 @@
+[
+	{
+	  "name":"New post",
+	  "letter":"t",
+	  "url":"new-post.md"
+	},
+	{
+	  "name":"Another post",
+	  "letter":"b",
+	  "url":"new-post.md"
+	}
+]
