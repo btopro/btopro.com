@@ -1,2 +1,2 @@
 ## New Post
-This is a new post here.
+This is the 1st post made for this setup so that we can have test data.

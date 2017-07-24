@@ -1,0 +1,180 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/lrndesign-image/lrndesign-image.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/marked-element/marked-element.html">
+<link rel="import" href="../bower_components/vaadin-grid/vaadin-grid.html">
+<link rel="import" href="../bower_components/vaadin-grid/vaadin-grid-column-group.html">
+<link rel="import" href="../bower_components/vaadin-grid/vaadin-grid-filter.html">
+<link rel="import" href="../bower_components/vaadin-grid/vaadin-grid-sorter.html">
+<link rel="import" href="../bower_components/vaadin-grid/vaadin-grid-selection-column.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="my-grid">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+      vaadin-grid#material {
+        height: 75vh;
+        font-family: Roboto, sans-serif;
+        --divider-color: rgba(0, 0, 0, var(--dark-divider-opacity));
+
+        --vaadin-grid-cell: {
+          padding: 0;
+        };
+
+        --vaadin-grid-header-cell: {
+          height: 3.5em;
+          color: rgba(0, 0, 0, var(--dark-secondary-opacity));
+          font-size: 1em;
+        };
+
+        --vaadin-grid-body-cell: {
+          height: 3em;
+          color: rgba(0, 0, 0, var(--dark-primary-opacity));
+          font-size: .8em;
+        };
+
+        --vaadin-grid-body-row-hover-cell: {
+          background-color: var(--paper-grey-200);
+        };
+
+        --vaadin-grid-body-row-selected-cell: {
+          background-color: var(--paper-grey-100);
+        };
+
+        --vaadin-grid-focused-cell: {
+          box-shadow: none;
+          font-weight: bold;
+        };
+      }
+
+      vaadin-grid#material .cell {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-right: 56px;
+      }
+
+      vaadin-grid#material .cell.last {
+        padding-right: 24px;
+      }
+
+      vaadin-grid#material .cell.numeric {
+        text-align: right;
+      }
+
+      vaadin-grid#material paper-checkbox {
+        --primary-color: var(--paper-indigo-500);
+        margin: 0 24px;
+      }
+
+      vaadin-grid#material vaadin-grid-sorter {
+        --vaadin-grid-sorter-arrow: {
+          display: none !important;
+        };
+      }
+
+      vaadin-grid#material vaadin-grid-sorter .cell {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      vaadin-grid#material vaadin-grid-sorter iron-icon {
+        transform: scale(0.8);
+      }
+
+      vaadin-grid#material vaadin-grid-sorter:not([direction]) iron-icon {
+        color: rgba(0, 0, 0, var(--dark-disabled-opacity));
+      }
+
+      vaadin-grid#material vaadin-grid-sorter[direction] {
+        color: rgba(0, 0, 0, var(--dark-primary-opacity));
+      }
+
+      vaadin-grid#material vaadin-grid-sorter[direction=desc] iron-icon {
+        transform: scale(0.8) rotate(180deg);
+      }
+      vaadin-grid-sorter {
+        text-align: center;
+      }
+    </style>
+    <iron-ajax
+      auto
+      url$="[[basePath]]/data/thoughts.json"
+      handle-as="json"
+      on-response="handleResponse"
+      last-response="{{thoughts}}"></iron-ajax>
+     <vaadin-grid column-reordering-allowed id="material" aria-label="Course list" items="[[thoughts]]">
+      <vaadin-grid-column width="50px" flex-grow="0">
+        <template class="header">#</template>
+        <template>[[index]]</template>
+        <template class="footer">#</template>
+      </vaadin-grid-column>
+      <vaadin-grid-column resizable>
+        <template class="header">
+          <vaadin-grid-sorter path="title">Title</vaadin-grid-sorter>
+        </template>
+        <template>
+            [[item.title]]
+        </template>
+        <template class="footer">
+          <vaadin-grid-filter aria-label="Title" path="title" value="[[_filterTitle]]">
+            <paper-input slot="filter" label="Title" value="{{_filterTitle::input}}" focus-target></paper-input>
+          </vaadin-grid-filter>
+        </template>
+      </vaadin-grid-column>
+      <vaadin-grid-column resizable>
+        <template class="header">
+          <vaadin-grid-sorter path="date">Date</vaadin-grid-sorter>
+        </template>
+        <template>
+            [[item.date]]
+        </template>
+        <template class="footer">
+          <vaadin-grid-filter aria-label="Date" path="date" value="[[_filterDate]]">
+            <paper-input slot="filter" label="Date" value="{{_filterDate::input}}" focus-target></paper-input>
+          </vaadin-grid-filter>
+        </template>
+      </vaadin-grid-column>
+      <vaadin-grid-column width="100px" flex-grow="0">
+        <template class="header"></template>
+        <template>
+          <paper-button raised on-click="_triggerDialog" id$="{{item.sis_course_id}}">Details</paper-button>
+        </template>
+        <template class="footer"></template>
+      </vaadin-grid-column>
+    </vaadin-grid>
+  </template>
+
+  <script>
+    class MyGrid extends Polymer.Element {
+      static get is() { return 'my-grid'; }
+      static get properties() {
+        return {
+          thoughts: {
+            type: Array,
+            notify: true,
+          },
+        };
+      }
+    }
+
+    window.customElements.define(MyGrid.is, MyGrid);
+  </script>
+</dom-module>

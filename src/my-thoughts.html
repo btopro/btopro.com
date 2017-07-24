@@ -31,7 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       last-response="{{thoughts}}"></iron-ajax>
      <template is="dom-repeat" items="{{thoughts}}" as="thought">
       <div class="card">
-        <lrndesign-image display="parallax" height="100" src="https://www.elmsln.org/sites/redesign/files/styles/square-profile-portrait/public/headshot.jpg"></lrndesign-image>
+        <lrndesign-image display="parallax" height="100" src$="[[basePath]]/data/images/[[thought.banner]]"></lrndesign-image>
         <div class="circle">[[thought.letter]]</div>
         <h1>[[thought.title]]</h1>
         <marked-element>

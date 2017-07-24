@@ -1,12 +1,15 @@
 [
 	{
-	  "name":"New post",
-	  "letter":"t",
-	  "url":"new-post.md"
+	  "title":"Making this site",
+	  "letter":"m",
+	  "url":"making-this-site.md",
+	  "banner":"default-thought.jpg",
+	  "date":"July 23, 2017"
 	},
 	{
-	  "name":"Another post",
-	  "letter":"b",
-	  "url":"new-post.md"
+	  "title":"New post",
+	  "letter":"n",
+	  "url":"new-post.md",
+	  "date":"July 22, 2017"
 	}
 ]
