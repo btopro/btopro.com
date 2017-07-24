@@ -1,2 +1,1 @@
-## New Post
 This is the 1st post made for this setup so that we can have test data.
