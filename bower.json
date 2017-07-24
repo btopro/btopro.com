@@ -31,7 +31,20 @@
     "iron-selector": "2.0-preview",
     "iron-a11y-keys-behavior": "2.0-preview",
     "paper-styles": "2.0-preview",
-    "webcomponentsjs": "^1.0.0-rc.7"
+    "webcomponentsjs": "^1.0.0-rc.7",
+    "iron-iconset-svg": "2.0-preview",
+    "marked-element": "^2.2.0",
+    "iron-ajax": "^2.0.2",
+    "hax-behaviors": "^0.0.6",
+    "paper-tooltip": "^2.0.0",
+    "iron-icon": "2.0-preview",
+    "paper-behaviors": "2.0-preview",
+    "hax-editbar": "^0.0.5",
+    "iron-behaviors": "2.0-preview",
+    "iron-checked-element-behavior": "2.0-preview",
+    "paper-ripple": "2.0-preview",
+    "iron-validatable-behavior": "2.0-preview",
+    "iron-form-element-behavior": "2.0-preview"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0-prerelease.7"
